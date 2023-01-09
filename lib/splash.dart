@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'home.dart';
 
-
 class Splash extends StatefulWidget {
   const Splash({Key? key}) : super(key: key);
 
@@ -18,10 +17,10 @@ class _SplashState extends State<Splash> {
     navToHome();
   }
 
-  navToHome() async
-  {
-      await Future.delayed(Duration(milliseconds: 1500),(){});
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Home()));
+  navToHome() async {
+    await Future.delayed(Duration(milliseconds: 1500), () {});
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => Home()));
   }
 
   @override
@@ -34,6 +33,5 @@ class _SplashState extends State<Splash> {
         ),
       ),
     );
-
   }
 }

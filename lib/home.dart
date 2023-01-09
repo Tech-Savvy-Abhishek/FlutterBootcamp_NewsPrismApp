@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:news_prism/widgets/navigation_drawer.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -13,13 +14,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    var searchHintsList = [
-      "All",
-      "Sports",
-      "Health",
-      "Science",
-      "Politics"
-    ];
+    var searchHintsList = ["All", "Sports", "Health", "Science", "Politics"];
     final random = new Random();
     var searchHint = searchHintsList[random.nextInt(searchHintsList.length)];
 
@@ -27,20 +22,26 @@ class _HomeState extends State<Home> {
 
     return Scaffold(
       backgroundColor: Color(0xFFFBF1D3),
+      drawer: NavigationDrawer(),
       appBar: AppBar(
         actions: [
           IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.notifications,
-                size: 35,
-              )),
+            onPressed: () {},
+            icon: Icon(
+              Icons.notifications,
+              size: 33,
+            ),
+          ),
         ],
-        leading: IconButton(
-          onPressed: () {},
-          icon: Icon(
-            Icons.menu_sharp,
-            size: 35,
+        leading: Builder(
+          builder: (context) => IconButton(
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
+            icon: Icon(
+              Icons.menu_outlined,
+              size: 33,
+            ),
           ),
         ),
         title: Text(
@@ -122,7 +123,6 @@ class _HomeState extends State<Home> {
 
             //carouselSlider showing top news
             Container(
-
               margin: EdgeInsets.symmetric(vertical: 15),
               child: CarouselSlider(
                 items: colorList.map((item) {
