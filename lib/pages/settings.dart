@@ -11,7 +11,10 @@ class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFF0A2647),
       appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Color(0xFF0A2647),
         title: Text(
           "SETTINGS",
           style: TextStyle(
@@ -22,6 +25,14 @@ class _SettingsState extends State<Settings> {
           ),
         ),
         centerTitle: true,
+      ),
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: Column(
+            children: [],
+          ),
+        ),
       ),
     );
   }

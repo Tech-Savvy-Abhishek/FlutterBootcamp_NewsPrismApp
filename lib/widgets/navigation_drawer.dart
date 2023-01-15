@@ -23,7 +23,7 @@ class NavigationDrawer extends StatelessWidget {
       width: isCollapsed ? MediaQuery.of(context).size.width * 0.2 : null,
       child: Drawer(
         child: Container(
-          color: Color(0xFFFBF1D3),
+          color: Color(0xFF0A2647),
           child: Column(
             children: [
               Container(
@@ -36,8 +36,8 @@ class NavigationDrawer extends StatelessWidget {
               buildList(items: itemsFirst, isCollapsed: isCollapsed),
               const SizedBox(height: 40),
               Divider(
-                color: Color(0xFF0A2647),
-                thickness: 1.5,
+                color: Colors.white,
+                thickness: 0.5,
                 indent: 25,
                 endIndent: 25,
               ),
@@ -49,7 +49,7 @@ class NavigationDrawer extends StatelessWidget {
               ),
               Spacer(),
               buildCollapseIcon(context, isCollapsed),
-              const SizedBox(height:35),
+              const SizedBox(height: 35),
             ],
           ),
         ),
@@ -60,8 +60,9 @@ class NavigationDrawer extends StatelessWidget {
   Widget buildHeader(bool isCollapsed) {
     return isCollapsed
         ? Text(
-            " N P",
+            " NP",
             style: TextStyle(
+              letterSpacing: 5,
               fontFamily: 'PlayfairDisplay',
               color: Color(0xFFFBF1D3),
               fontSize: 35,
@@ -71,7 +72,6 @@ class NavigationDrawer extends StatelessWidget {
         : Row(
             children: [
               const SizedBox(width: 24),
-
               const SizedBox(width: 16),
               Text(
                 "NEWS PRISM",
@@ -110,7 +110,7 @@ class NavigationDrawer extends StatelessWidget {
             height: size,
             child: Icon(
               icon,
-              color: Colors.grey[800],
+              color: Colors.white,
               size: 33,
             ),
           ),
@@ -147,7 +147,7 @@ class NavigationDrawer extends StatelessWidget {
       required String text,
       required IconData icon,
       VoidCallback? onClicked}) {
-    final color = Colors.grey[800];
+    final color = Colors.white;
     final leading = Icon(
       icon,
       color: color,
@@ -179,8 +179,7 @@ class NavigationDrawer extends StatelessWidget {
         .push(MaterialPageRoute(builder: (context) => page));
 
     Navigator.of(context).pop();
-    switch(index)
-    {
+    switch (index) {
       case 0:
         navigateTo(Profile());
         break;
