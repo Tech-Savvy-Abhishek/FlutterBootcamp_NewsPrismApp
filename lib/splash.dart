@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_prism/access/login.dart';
 
 import 'home.dart';
 
@@ -20,7 +21,7 @@ class _SplashState extends State<Splash> {
   navToHome() async {
     await Future.delayed(Duration(milliseconds: 1500), () {});
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => Home()));
+        context, MaterialPageRoute(builder: (context) => LoginScreen()));
   }
 
   @override
