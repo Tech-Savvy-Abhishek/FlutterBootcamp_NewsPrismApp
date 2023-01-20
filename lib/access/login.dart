@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:news_prism/access/signup.dart';
+import 'package:news_prism/data/constants.dart';
 import 'package:news_prism/home.dart';
 import 'package:news_prism/widgets/mytextfield.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key}) : super(key: key);
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   final usernameController = TextEditingController();
+
   final passwordController = TextEditingController();
+
+  bool? value = false;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +42,7 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    height: 55,
+                    height: 40,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -105,6 +114,42 @@ class LoginScreen extends StatelessWidget {
                                 ),
                               ),
                             ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 10,
+                              ), //SizedBox
+                              Text(
+                                'Keep me Signed in',
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    color: chinaIvory,
+                                    fontFamily: 'FaunaOne'),
+                              ), //Text
+                              SizedBox(width: 10), //SizedBox
+
+                              Transform.scale(
+                                scale: 1.4,
+                                child: Checkbox(
+                                  side: BorderSide(
+                                    color: chinaIvory,
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  value: this.value,
+                                  onChanged: (bool? value) {
+                                    setState(() {
+                                      this.value = value;
+                                    });
+                                  },
+                                ),
+                              ), //Checkbox
+                            ], //<Widget>[]
                           ),
                           SizedBox(
                             height: 20,

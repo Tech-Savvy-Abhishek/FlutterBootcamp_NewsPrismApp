@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:news_prism/access/login.dart';
+import 'package:news_prism/pages/choose_categories.dart';
 
+import '../data/constants.dart';
 import '../home.dart';
 import '../widgets/mytextfield.dart';
 
-class SignUpScreen extends StatelessWidget {
+class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
 
   @override
+  State<SignUpScreen> createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
+  bool? value = false;
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color(0xFFFBF1D3),
+        backgroundColor: chinaIvory,
         body: SingleChildScrollView(
           child: SafeArea(
             child: Padding(
@@ -25,7 +33,7 @@ class SignUpScreen extends StatelessWidget {
                           "Welcome,",
                           style: TextStyle(
                             fontFamily: 'FaunaOne',
-                            color: Color(0xFF0A2647),
+                            color: haliteBlue,
                             fontSize: 45,
                             fontWeight: FontWeight.bold,
                           ),
@@ -42,7 +50,7 @@ class SignUpScreen extends StatelessWidget {
                           "Create a new account",
                           style: TextStyle(
                             fontFamily: 'FaunaOne',
-                            color: Color(0xFF0A2647).withOpacity(0.6),
+                            color: haliteBlue.withOpacity(0.6),
                             fontSize: 30,
                             fontWeight: FontWeight.bold,
                           ),
@@ -95,14 +103,47 @@ class SignUpScreen extends StatelessWidget {
                             SizedBox(
                               height: 20,
                             ),
+                            Row(
+                              children: [
+                                SizedBox(
+                                  width: 10,
+                                ), //SizedBox
+                                Text(
+                                  'Keep me Signed in',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      color: haliteBlue,
+                                      fontFamily: 'FaunaOne'),
+                                ), //Text
+                                SizedBox(width: 10), //SizedBox
+
+                                Transform.scale(
+                                  scale: 1.4,
+                                  child: Checkbox(
+                                    side: BorderSide(
+                                      color: haliteBlue,
+                                    ),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    value: this.value,
+                                    onChanged: (bool? value) {
+                                      setState(() {
+                                        this.value = value;
+                                      });
+                                    },
+                                  ),
+                                ), //Checkbox
+                              ], //<Widget>[]
+                            ),
                             SizedBox(
-                              height: 20,
+                              height: 15,
                             ),
                             SizedBox(
                               width: double.infinity,
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: Color(0xFF0A2647),
+                                  backgroundColor: haliteBlue,
                                   padding: EdgeInsets.symmetric(vertical: 8),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10),
@@ -113,13 +154,14 @@ class SignUpScreen extends StatelessWidget {
                                   Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => Home()));
+                                          builder: (context) =>
+                                              ChooseCategories()));
                                 },
                                 child: Text(
                                   "SIGNUP",
                                   style: TextStyle(
                                     fontFamily: 'FaunaOne',
-                                    color: Color(0xFFFBF1D3),
+                                    color: chinaIvory,
                                     fontSize: 30,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -135,7 +177,7 @@ class SignUpScreen extends StatelessWidget {
                                     "OR",
                                     style: TextStyle(
                                       fontFamily: 'FaunaOne',
-                                      color: Color(0xFF0A2647),
+                                      color: haliteBlue,
                                       fontSize: 25,
                                     ),
                                   ),
@@ -149,7 +191,7 @@ class SignUpScreen extends StatelessWidget {
                                         padding:
                                             EdgeInsets.symmetric(vertical: 10),
                                         side: BorderSide(
-                                          color: Color(0xFF0A2647),
+                                          color: haliteBlue,
                                           width: 2,
                                         ),
                                         shape: RoundedRectangleBorder(
@@ -166,7 +208,7 @@ class SignUpScreen extends StatelessWidget {
                                         "  Login with Google",
                                         style: TextStyle(
                                           fontFamily: 'FaunaOne',
-                                          color: Color(0xFF0A2647),
+                                          color: haliteBlue,
                                           fontSize: 25,
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -189,8 +231,7 @@ class SignUpScreen extends StatelessWidget {
                                         text: "Already have an Account?  ",
                                         style: TextStyle(
                                           fontFamily: 'FaunaOne',
-                                          color: Color(0xFF0A2647)
-                                              .withOpacity(0.8),
+                                          color: haliteBlue.withOpacity(0.8),
                                           fontSize: 15,
                                         ),
                                         children: [
@@ -198,7 +239,7 @@ class SignUpScreen extends StatelessWidget {
                                             text: "Login",
                                             style: TextStyle(
                                               fontFamily: 'FaunaOne',
-                                              color: Color(0xFF0A2647),
+                                              color: haliteBlue,
                                               fontSize: 20,
                                             ),
                                           )
