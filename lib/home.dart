@@ -1,8 +1,16 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:http/http.dart';
 import 'package:news_prism/widgets/navigation_drawer.dart';
+
+import 'data/constants.dart';
+import 'data/constants.dart';
+import 'data/constants.dart';
+import 'data/constants.dart';
+import 'model/news_query_model.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -12,6 +20,53 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  List<NewsQueryModel> newsModelList = <NewsQueryModel>[];
+  List<NewsQueryModel> newsModelListCarousel = <NewsQueryModel>[];
+
+  bool isLoading = true;
+
+  getNewsByQuery(String query) async {
+    String url =
+        "https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=2d9d05f2ffc349b99a3c1850bb4c3315";
+    Response response = await get(Uri.parse(url));
+    Map data = jsonDecode(response.body);
+    setState(() {
+      data["articles"].forEach((element) {
+        NewsQueryModel newsQueryModel = new NewsQueryModel();
+        newsQueryModel = NewsQueryModel.fromMap(element);
+        newsModelList.add(newsQueryModel);
+        setState(() {
+          isLoading = false;
+        });
+      });
+    });
+  }
+
+  getNewsofIndia() async {
+    String url =
+        "https://newsapi.org/v2/everything?q=tesla&from=2022-12-22&sortBy=publishedAt&apiKey=2d9d05f2ffc349b99a3c1850bb4c3315";
+    Response response = await get(Uri.parse(url));
+    Map data = jsonDecode(response.body);
+    setState(() {
+      data["articles"].forEach((element) {
+        NewsQueryModel newsQueryModel = new NewsQueryModel();
+        newsQueryModel = NewsQueryModel.fromMap(element);
+        newsModelListCarousel.add(newsQueryModel);
+        setState(() {
+          isLoading = false;
+        });
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getNewsByQuery("corona");
+    getNewsofIndia();
+  }
+
   @override
   Widget build(BuildContext context) {
     var searchHintsList = ["All", "Sports", "Health", "Science", "Politics"];
@@ -125,7 +180,7 @@ class _HomeState extends State<Home> {
             Container(
               margin: EdgeInsets.symmetric(vertical: 15),
               child: CarouselSlider(
-                items: colorList.map((item) {
+                items: newsModelListCarousel.map((instance) {
                   return Builder(builder: (BuildContext context) {
                     return Container(
                         child: Card(
@@ -136,8 +191,8 @@ class _HomeState extends State<Home> {
                         children: [
                           ClipRRect(
                             borderRadius: BorderRadius.circular(10),
-                            child: Image.asset(
-                              "images/news_image.jpg",
+                            child: Image.network(
+                              instance.newsImg,
                               fit: BoxFit.fitHeight,
                               height: double.infinity,
                             ),
@@ -162,9 +217,10 @@ class _HomeState extends State<Home> {
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 8, vertical: 10),
                                 child: Text(
-                                  "NEWS HEADLINE",
+                                  instance.newsHead,
                                   style: TextStyle(
                                     color: Colors.white,
+                                    fontFamily: 'FaunaOne',
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -255,20 +311,25 @@ class _HomeState extends State<Home> {
                       child: Stack(
                         children: [
                           ClipRRect(
-                              borderRadius: BorderRadius.circular(15),
-                              child: Image.asset('images/news_image.jpg')),
+                            borderRadius: BorderRadius.circular(15),
+                            child: Image.network(
+                              newsModelList[index].newsImg,
+                              fit: BoxFit.fitHeight,
+                              height: 250,
+                              width: double.infinity,
+                            ),
+                          ),
                           Positioned(
                             left: 0,
                             right: 0,
                             bottom: 0,
                             child: Container(
-                                height: 60,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(15),
                                     gradient: LinearGradient(
                                       colors: [
-                                        Colors.redAccent.withOpacity(0.1),
-                                        Colors.red,
+                                        Colors.black.withOpacity(0.1),
+                                        Colors.black,
                                       ],
                                       begin: Alignment.topCenter,
                                       end: Alignment.bottomCenter,
@@ -278,7 +339,7 @@ class _HomeState extends State<Home> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "Headline",
+                                      newsModelList[index].newsHead,
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 18,
@@ -286,8 +347,11 @@ class _HomeState extends State<Home> {
                                       ),
                                     ),
                                     Text(
-                                      "Decription",
-                                      style: TextStyle(),
+                                      newsModelList[index].newsDes.length > 50
+                                          ? "${newsModelList[index].newsDes.substring(0, 55)}...."
+                                          : newsModelList[index].newsDes,
+                                      style: TextStyle(
+                                          fontSize: 18, color: Colors.white),
                                     ),
                                   ],
                                 )),
@@ -297,7 +361,7 @@ class _HomeState extends State<Home> {
                     ),
                   );
                 },
-                itemCount: 3,
+                itemCount: newsModelList.length,
               ),
             )
           ],
@@ -305,11 +369,4 @@ class _HomeState extends State<Home> {
       ),
     );
   }
-
-  final List colorList = [
-    Colors.blueAccent,
-    Colors.redAccent,
-    Colors.green,
-    Colors.orange
-  ];
 }

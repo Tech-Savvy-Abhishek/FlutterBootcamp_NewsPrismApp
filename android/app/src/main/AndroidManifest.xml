@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.news_prism">
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
    <application
         android:label="news_prism"
         android:name="${applicationName}"
