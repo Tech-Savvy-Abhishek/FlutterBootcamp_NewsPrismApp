@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:news_prism/pages/news_by_category.dart';
+import 'package:news_prism/widgets/loading_card.dart';
 import 'package:news_prism/widgets/navigation_drawer.dart';
 
 import 'model/news_query_model.dart';
@@ -179,7 +180,10 @@ class _HomeState extends State<Home> {
             Container(
               margin: EdgeInsets.symmetric(vertical: 15),
               child: isLoadingCarousel
-                  ? Container(child: CircularProgressIndicator())
+                  ? CarouselSlider(
+                      options: CarouselOptions(
+                          height: 200.0, enlargeCenterPage: true),
+                      items: [LoadingCard()])
                   : CarouselSlider(
                       items: newsModelListCarousel.map((instance) {
                         return Builder(builder: (BuildContext context) {
@@ -303,18 +307,17 @@ class _HomeState extends State<Home> {
 
             //listview showing news cards
             Container(
-              child: isLoading
-                  ? Container(
-                      child: CircularProgressIndicator(),
-                    )
-                  : ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          margin:
-                              EdgeInsets.symmetric(horizontal: 18, vertical: 5),
-                          child: Card(
+              child: ListView.builder(
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return Container(
+                    margin: EdgeInsets.symmetric(horizontal: 18, vertical: 5),
+                    child: isLoading
+                        ? Container(
+                            child: LoadingCard(),
+                          )
+                        : Card(
                             elevation: 3,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15),
@@ -378,10 +381,10 @@ class _HomeState extends State<Home> {
                               ],
                             ),
                           ),
-                        );
-                      },
-                      itemCount: newsModelList.length,
-                    ),
+                  );
+                },
+                itemCount: isLoading ? 5 : newsModelList.length,
+              ),
             )
           ],
         ),

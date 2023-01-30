@@ -5,6 +5,7 @@ import 'package:http/http.dart';
 import 'package:news_prism/data/constants.dart';
 
 import '../model/news_query_model.dart';
+import '../widgets/loading_card.dart';
 
 class CategoryNews extends StatefulWidget {
   String query;
@@ -83,19 +84,18 @@ class _CategoryState extends State<CategoryNews> {
         elevation: 0,
       ),
       body: SingleChildScrollView(
-        child: isLoading
-            ? Center(
-                child: Container(
-                    padding: EdgeInsets.fromLTRB(0, 100, 0, 0),
-                    child: CircularProgressIndicator()))
-            : Container(
-                child: ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      margin: EdgeInsets.symmetric(horizontal: 18, vertical: 5),
-                      child: Card(
+        child: Container(
+          child: ListView.builder(
+            physics: NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              return Container(
+                margin: EdgeInsets.symmetric(horizontal: 18, vertical: 5),
+                child: isLoading
+                    ? Container(
+                        child: LoadingCard(),
+                      )
+                    : Card(
                         elevation: 3,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15),
@@ -152,11 +152,11 @@ class _CategoryState extends State<CategoryNews> {
                           ],
                         ),
                       ),
-                    );
-                  },
-                  itemCount: newsModelList.length,
-                ),
-              ),
+              );
+            },
+            itemCount: isLoading ? 5 : newsModelList.length,
+          ),
+        ),
       ),
     );
   }
