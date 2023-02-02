@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:news_prism/pages/news_by_category.dart';
+import 'package:news_prism/pages/news_webviewpage.dart';
 import 'package:news_prism/widgets/loading_card.dart';
 import 'package:news_prism/widgets/navigation_drawer.dart';
 
@@ -197,53 +198,63 @@ class _HomeState extends State<Home> {
                         return Builder(builder: (BuildContext context) {
                           try {
                             return Container(
-                                child: Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Stack(
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
-                                    child: Image.network(
-                                      instance.newsImg,
-                                      fit: BoxFit.fitHeight,
-                                      height: double.infinity,
-                                    ),
-                                  ),
-                                  Positioned(
-                                    left: 0,
-                                    right: 0,
-                                    bottom: 0,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        gradient: LinearGradient(
-                                          colors: [
-                                            Colors.black.withOpacity(0),
-                                            Colors.black.withOpacity(0.5),
-                                            Colors.black,
-                                          ],
-                                          begin: Alignment.topCenter,
-                                          end: Alignment.bottomCenter,
-                                        ),
+                                child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            NewsView(instance.newsUrl)));
+                              },
+                              child: Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Stack(
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: Image.network(
+                                        instance.newsImg,
+                                        fit: BoxFit.fitHeight,
+                                        height: double.infinity,
                                       ),
+                                    ),
+                                    Positioned(
+                                      left: 0,
+                                      right: 0,
+                                      bottom: 0,
                                       child: Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 8, vertical: 10),
-                                        child: Text(
-                                          instance.newsHead,
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontFamily: 'FaunaOne',
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          gradient: LinearGradient(
+                                            colors: [
+                                              Colors.black.withOpacity(0),
+                                              Colors.black.withOpacity(0.5),
+                                              Colors.black,
+                                            ],
+                                            begin: Alignment.topCenter,
+                                            end: Alignment.bottomCenter,
+                                          ),
+                                        ),
+                                        child: Container(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 8, vertical: 10),
+                                          child: Text(
+                                            instance.newsHead,
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontFamily: 'FaunaOne',
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ));
                           } catch (e) {
@@ -404,7 +415,7 @@ class _HomeState extends State<Home> {
                 },
                 itemCount: isLoading ? 5 : newsModelList.length,
               ),
-            )
+            ),
           ],
         ),
       ),
