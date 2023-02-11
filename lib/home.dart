@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:http/http.dart';
 import 'package:news_prism/pages/news_by_category.dart';
 import 'package:news_prism/pages/news_webviewpage.dart';
@@ -350,69 +351,95 @@ class _HomeState extends State<Home> {
                                         builder: (context) => NewsView(
                                             newsModelList[index].newsUrl)));
                               },
-                              child: Card(
-                                elevation: 3,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                child: Stack(
+                              child: Slidable(
+                                endActionPane: ActionPane(
+                                  motion: StretchMotion(),
                                   children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(15),
-                                      child: Image.network(
-                                        newsModelList[index].newsImg,
-                                        fit: BoxFit.fitHeight,
-                                        height: 250,
-                                        width: double.infinity,
-                                      ),
+                                    SlidableAction(
+                                      onPressed: null,
+                                      icon: Icons.bookmark,
+                                      backgroundColor: Colors.green,
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(15),
+                                          bottomLeft: Radius.circular(15)),
+                                      label: "Save",
                                     ),
-                                    Positioned(
-                                      left: 0,
-                                      right: 0,
-                                      bottom: 0,
-                                      child: Container(
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(15),
-                                              gradient: LinearGradient(
-                                                colors: [
-                                                  Colors.black.withOpacity(0),
-                                                  Colors.black.withOpacity(0.5),
-                                                  Colors.black,
-                                                ],
-                                                begin: Alignment.topCenter,
-                                                end: Alignment.bottomCenter,
-                                              )),
-                                          padding: EdgeInsets.fromLTRB(
-                                              10, 15, 10, 5),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                newsModelList[index].newsHead,
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                              Text(
-                                                newsModelList[index]
-                                                            .newsDes
-                                                            .length >
-                                                        50
-                                                    ? "${newsModelList[index].newsDes.substring(0, 55)}...."
-                                                    : newsModelList[index]
-                                                        .newsDes,
-                                                style: TextStyle(
-                                                    fontSize: 18,
-                                                    color: Colors.white),
-                                              ),
-                                            ],
-                                          )),
+                                    SlidableAction(
+                                      onPressed: null,
+                                      icon: Icons.share,
+                                      backgroundColor: Colors.blueGrey,
+                                      borderRadius: BorderRadius.only(
+                                          topRight: Radius.circular(15),
+                                          bottomRight: Radius.circular(15)),
+                                      label: "Share",
                                     ),
                                   ],
+                                ),
+                                child: Card(
+                                  elevation: 3,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  child: Stack(
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(15),
+                                        child: Image.network(
+                                          newsModelList[index].newsImg,
+                                          fit: BoxFit.fitHeight,
+                                          height: 250,
+                                          width: double.infinity,
+                                        ),
+                                      ),
+                                      Positioned(
+                                        left: 0,
+                                        right: 0,
+                                        bottom: 0,
+                                        child: Container(
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(15),
+                                                gradient: LinearGradient(
+                                                  colors: [
+                                                    Colors.black.withOpacity(0),
+                                                    Colors.black
+                                                        .withOpacity(0.5),
+                                                    Colors.black,
+                                                  ],
+                                                  begin: Alignment.topCenter,
+                                                  end: Alignment.bottomCenter,
+                                                )),
+                                            padding: EdgeInsets.fromLTRB(
+                                                10, 15, 10, 5),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  newsModelList[index].newsHead,
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 18,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  newsModelList[index]
+                                                              .newsDes
+                                                              .length >
+                                                          50
+                                                      ? "${newsModelList[index].newsDes.substring(0, 55)}...."
+                                                      : newsModelList[index]
+                                                          .newsDes,
+                                                  style: TextStyle(
+                                                      fontSize: 18,
+                                                      color: Colors.white),
+                                                ),
+                                              ],
+                                            )),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -423,6 +450,7 @@ class _HomeState extends State<Home> {
                   }
                 },
                 itemCount: isLoading ? 5 : newsModelList.length,
+                // itemCount: 5
               ),
             ),
           ],
