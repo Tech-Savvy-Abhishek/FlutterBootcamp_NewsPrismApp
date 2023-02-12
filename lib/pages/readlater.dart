@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
 class ReadLater extends StatefulWidget {
   const ReadLater({Key? key}) : super(key: key);
@@ -8,6 +9,14 @@ class ReadLater extends StatefulWidget {
 }
 
 class _ReadLaterState extends State<ReadLater> {
+  late List savedNewsList;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,6 +32,21 @@ class _ReadLaterState extends State<ReadLater> {
         ),
         centerTitle: true,
       ),
+      body: ListView.builder(
+        itemCount: savedNewsList.length,
+        itemBuilder: (context, index) {
+          return Card(
+            child: Text(
+              savedNewsList[index],
+            ),
+          );
+        },
+      ),
     );
+  }
+
+  void fetchList() {
+    var box = Hive.box("SavedNews");
+    savedNewsList = box.get("savednews", defaultValue: []);
   }
 }
