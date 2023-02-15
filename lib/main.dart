@@ -6,9 +6,11 @@ import 'package:news_prism/provider/nav_provider.dart';
 import 'package:news_prism/splash.dart';
 import 'package:provider/provider.dart';
 
+import 'model/localdb.dart';
+
 void main() async {
   await Hive.initFlutter();
-
+  Hive.registerAdapter(LocalDBModelAdapter());
   await Hive.openBox("SavedNews");
 
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,8 +25,7 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) =>
-      ChangeNotifierProvider(
+  Widget build(BuildContext context) => ChangeNotifierProvider(
         create: (context) => NavigationProvider(),
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
