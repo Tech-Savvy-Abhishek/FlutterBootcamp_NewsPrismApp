@@ -24,7 +24,9 @@ class _CategoryState extends State<CategoryNews> {
 
   getNewsByQuery(String query) async {
     String url =
-        "https://newsapi.org/v2/everything?q=$query&from=2023-02-01&to=2023-02-01&sortBy=popularity&apiKey=2d9d05f2ffc349b99a3c1850bb4c3315";
+        "https://newsapi.org/v2/everything?q=$query&from=2023-03-18&sortBy=publishedAt&apiKey=2d9d05f2ffc349b99a3c1850bb4c3315";
+    // "https://newsapi.org/v2/$query?&domains=wsj.com&apiKey=2d9d05f2ffc349b99a3c1850bb4c3315";
+    // "https://newsapi.org/v2/everything?q=$query&from=2023-02-01&to=2023-02-01&sortBy=popularity&apiKey=2d9d05f2ffc349b99a3c1850bb4c3315";
     Response response = await get(Uri.parse(url));
     Map data = jsonDecode(response.body);
     setState(() {
